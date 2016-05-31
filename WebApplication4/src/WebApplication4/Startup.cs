@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using WebApplication4.Models;
-using WebApplication4.Services;
+
 
 namespace WebApplication4
 {
@@ -45,12 +45,7 @@ namespace WebApplication4
      {
          options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]);
      });
-
             services.AddMvc();
-
-            // Add application services.
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
