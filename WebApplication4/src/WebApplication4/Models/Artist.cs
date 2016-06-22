@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace WebApplication4.Models
 {
-    public class Album
+    public class Artist
     {
-        public int AlbumId { get; set; }
-        public string Title { get; set; }
         public int ArtistId { get; set; }
+        public string Name { get; set; }
     }
 }

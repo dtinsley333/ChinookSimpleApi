@@ -15,6 +15,10 @@ namespace WebApplication4.Models
     {
  
         public DbSet<Album> Album { get; set; }
+        public DbSet<Album> Artist { get; set; }
+        public DbSet<Invoice> Invoice { get; set; }
+        public DbSet<InvoiceLine> InvoiceLine { get; set; }
+        public DbSet<Track> Track { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

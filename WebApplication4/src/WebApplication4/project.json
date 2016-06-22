@@ -35,7 +35,11 @@
   },
 
   "frameworks": {
-    "dnx451": { },
+    "dnx451": {
+      "dependencies": {
+        "Microsoft.AspNet.WebApi.Core": "5.2.3"
+      }
+    },
     "dnxcore50": { }
   },
 
