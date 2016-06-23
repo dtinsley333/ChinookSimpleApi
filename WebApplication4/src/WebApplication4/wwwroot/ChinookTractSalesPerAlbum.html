@@ -1,44 +1,105 @@
 <html>
-<body>
-    <header>
+    <head>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>  
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script type="text/javascript">
+        google.load("visualization", "1", { packages: ["corechart"] });
+        </script> 
+        <script type="text/javascript">
+         
+            $(function () {
+                $.ajax({
+                    type: 'Get',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: 'http://localhost:59977/api/albums',
+                    data: '{}',
+                    success: function (chartsdata) {
+                        var data = new google.visualization.DataTable();
 
-    // Load the Visualization API and the piechart package.
-    google.charts.load('current', { 'packages': ['corechart'] });
+                        data.addColumn('string', 'Album Name');
+                        data.addColumn('number', 'Tracks Sold Amount');
 
-    // Set a callback to run when the Google Visualization API is loaded.
-    google.charts.setOnLoadCallback(drawChart);
+                        for (var i = 0; i < chartsdata.length; i++) {
+                            data.addRow([chartsdata[i].AlbumName, chartsdata[i].TrackSoldAmount]);
+                        }
 
-    function drawChart() {
-        var jsonData = $.ajax({
-            url: "http://localhost:59977/api/albums",
-            dataType: "json",
-            async: false
-        }).responseText;
+                        // Instantiate and draw our chart, passing in some options    
+                        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
 
-        // Create our data table out of JSON data loaded from server.
-        //  alert(jsonData);
-         jsonData = JSON.stringify(eval("(" + jsonData + ")"));
-        var data = new google.visualization.DataTable(jsonData);
-        data.AddColumn('string', "AlbumName");
-        data.AddColumn('number', 'TrackSoldAmount');
-        for (var i = 0; i < dataValues.length; i++) {
-            data.addRow([dataValues[i].AlbumName, dataValues[i].TrackSoldAmount]);
-        }
 
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
-        chart.draw(data, { width: 400, height: 240 });
-    }
+                        var options = {
+                            pointSize: 20,
+                            title: "Albums with most track sales",
+                            color: '#34A853',
+                            height:400,
+                            legend:
+                            {
+                                position: 'top',
+                                textStyle:
+                                {
+                                    color: '#f5f5f5'
+                                }
+                            },
+                            colors: ['#34A853', 'ff6600', '#FBBC05'],
+                            backgroundColor: '#454545',
+                            hAxis:
+                            {
+                                title: 'Sales',
+                                height:'90%',
+                                titleTextStyle:
+                                {
+                                    italic: false,
+                                    color: '#00BBF1',
+                                    fontSize: '15'
+                                },
+                                textStyle:
+                                {
+                                    color: '#f5f5f5'
+                                }
+                            },
+                            vAxis:
+                            {
+                                baselineColor: '#f5f5f5',
+                                title: 'Albums',
+                                titleTextStyle:
+                                {
+                                    color: '#00BBF1',
+                                    italic: false,
+                                    fontSize: '15'
+                                    
+                                },
+                                textStyle:
+                                {
+                                    color: '#f5f5f5'
+                                },
+                                viewWindow:
+                                {
+                                    min: 0,
+                                    format: 'long'
+                                }
+                            },
+                            chartArea: {
+                                left: 450,
+                                width: '80%',
+                                height:'50%'
+                            }
+                        };
+                        chart.draw(data, options );                   
+
+                    },
+                    error: function () {
+                        alert("Error loading data! Please try again.");
+                    }
+                });
+            })
 
 
         </script>
-    </header>
+    </head>
 
-
-<div id="chart_div"></div>
+<body>
+    <div id="chart_div"></div>
 </body>
-
 </html>

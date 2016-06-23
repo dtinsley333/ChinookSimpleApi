@@ -37,10 +37,13 @@ namespace WebApplication4.Controllers
                                            into g
                                                          select new
                                                          {
-                                                             AlbumName = al.Title,
+                                                             AlbumName = al.Title, 
                                                              TrackSoldAmount = g.Sum(i=>invl.UnitPrice)
                                                          }
-                                                            ).OrderByDescending(a=>a.TrackSoldAmount).Take(6).ToList();
+                                                            ).OrderByDescending(a=>a.TrackSoldAmount).Take(10).ToList();
+
+
+
 
 
             return Json(sumOfTrackSalesPerAlbum);
